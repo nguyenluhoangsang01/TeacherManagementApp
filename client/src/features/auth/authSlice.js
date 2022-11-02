@@ -62,6 +62,18 @@ export const authSlice = createSlice({
         });
       }
     },
+
+    logoutReducer: (state) => {
+      state.user = null;
+      state.isLoading = false;
+
+      localStorage.removeItem(LOCAL_STORAGE_AUTH_KEY);
+
+      toast("Đăng xuất thành công!", {
+        icon: <AiOutlineCheck className="text-[green]" />,
+        duration: 5000,
+      });
+    },
   },
 });
 
@@ -91,7 +103,8 @@ export const forgotPasswordReducerAsync = (formState) => async (dispatch) => {
   }
 };
 
-export const { loginReducer, forgotPasswordReducer } = authSlice.actions;
+export const { loginReducer, forgotPasswordReducer, logoutReducer } =
+  authSlice.actions;
 export default authSlice.reducer;
 
 export const selectAuth = (state) => state.auth;
