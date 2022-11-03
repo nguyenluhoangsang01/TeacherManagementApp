@@ -6,6 +6,7 @@ import ForgotPassword from "./pages/ForgotPassword";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
+import Register from "./pages/Register";
 import Teacher from "./pages/Teacher";
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <Route path="/auth/" element={<Auth />}>
           <Route path="login" element={<Login />} />
           <Route path="forgot-password" element={<ForgotPassword />} />
+          <Route path="register" element={<Register />} />
         </Route>
 
         <Route path="*" element={<NotFound />} />

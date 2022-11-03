@@ -4,29 +4,20 @@ import {
   AiOutlineClose,
   AiOutlineLoading3Quarters,
 } from "react-icons/ai";
-import { useSelector } from "react-redux";
-import { Link, Navigate, useNavigate } from "react-router-dom";
-import { selectAuth } from "../../features/auth/authSlice";
-import { BASE_URL_API, LOCAL_STORAGE_AUTH_KEY } from "../../utils/constants";
+import { Link } from "react-router-dom";
+import { BASE_URL_API } from "../../utils/constants";
 import { sendAPIRequest, sendToast } from "../../utils/helpers";
 
 const initialValue = {
   email: "",
   password: "",
   confirmPassword: "",
+  role: "teacher",
 };
 
-const ForgotPassword = () => {
-  const { user } = useSelector(selectAuth);
-  const auth = localStorage.getItem(LOCAL_STORAGE_AUTH_KEY);
-  const navigate = useNavigate();
-
+const Register = () => {
   const [form, setForm] = useState(initialValue);
   const [loading, setLoading] = useState(false);
-
-  if (user || auth) {
-    return <Navigate to="/" replace />;
-  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -35,8 +26,8 @@ const ForgotPassword = () => {
 
     try {
       const res = await sendAPIRequest(
-        `${BASE_URL_API}/forgot-password`,
-        "PUT",
+        `${BASE_URL_API}/register`,
+        "POST",
         form
       );
 
@@ -44,15 +35,13 @@ const ForgotPassword = () => {
         sendToast(res.message, <AiOutlineCheck className="text-[green]" />);
 
         setForm(initialValue);
-
-        navigate("/auth/login", { replace: true });
       } else {
         sendToast(res.message, <AiOutlineClose className="text-[red]" />);
       }
 
       setLoading(false);
     } catch (error) {
-      sendToast(error.message, <AiOutlineClose className="text-[red]" />);
+			sendToast(error.message, <AiOutlineClose className="text-[red]" />);
 
       setLoading(false);
     }
@@ -107,6 +96,26 @@ const ForgotPassword = () => {
         />
       </div>
 
+      <div className="form-group">
+        <label htmlFor="role">Vai trò</label>
+        <select
+          className="form-control"
+          name="role"
+          id="role"
+          onChange={(e) =>
+            setForm({
+              ...form,
+              role: e.target.value,
+            })
+          }
+        >
+          <option value="teacher">Giảng viên</option>
+          <option value="headOfSubject">Trưởng bộ môn</option>
+          <option value="boardOfDirectors">Ban chủ nhiệm khoa</option>
+          <option value="admin">Quản trị viên</option>
+        </select>
+      </div>
+
       <button
         type="submit"
         className="btn py-2 transition hover:scale-105 active:scale-100 mt-4 flex items-center justify-center"
@@ -115,15 +124,15 @@ const ForgotPassword = () => {
         {loading ? (
           <AiOutlineLoading3Quarters className="animate-spin w-6 h-6" />
         ) : (
-          "Thay đổi"
+          "Đăng ký"
         )}
       </button>
 
-      <div className="mt-40">
+      <div className="mt-24">
         <p className="text-center">
-          Quay lại đăng nhập?{" "}
-          <Link to="/auth/login" className="font-semibold underline">
-            Đăng nhập
+          Quay lại trang chủ?{" "}
+          <Link to="/" className="font-semibold underline">
+            Trang chủ
           </Link>
         </p>
       </div>
@@ -131,4 +140,4 @@ const ForgotPassword = () => {
   );
 };
 
-export default ForgotPassword;
+export default Register;

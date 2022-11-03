@@ -2,9 +2,10 @@ POST http://localhost:8000/api/auth/register
 Content-Type: application/json
 
 {
-	"email": "sang.197ct22513@vanlanguni.vn",
-	"password": "12345678",
-	"confirmPassword": "12345678"
+	"email": "admin@admin.com",
+	"password": "admin123",
+	"confirmPassword": "admin123",
+	"role": "admin"
 }
 
 

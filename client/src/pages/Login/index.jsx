@@ -1,7 +1,10 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
-import { loginReducerAsync } from "../../features/auth/authSlice";
+import { AiOutlineClose, AiOutlineLoading3Quarters } from "react-icons/ai";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, Navigate } from "react-router-dom";
+import { loginReducerAsync, selectAuth } from "../../features/auth/authSlice";
+import { LOCAL_STORAGE_AUTH_KEY } from "../../utils/constants";
+import { sendToast } from "../../utils/helpers";
 
 const initialValue = {
   email: "",
@@ -10,15 +13,30 @@ const initialValue = {
 
 const Login = () => {
   const dispatch = useDispatch();
+  const { user } = useSelector(selectAuth);
+  const auth = localStorage.getItem(LOCAL_STORAGE_AUTH_KEY);
 
   const [form, setForm] = useState(initialValue);
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  if (user || auth) {
+    return <Navigate to="/" replace />;
+  }
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    dispatch(loginReducerAsync(form));
+    setLoading(true);
 
-    setForm(initialValue);
+    try {
+      await dispatch(loginReducerAsync(form));
+
+      setLoading(false);
+    } catch (error) {
+      sendToast(error.message, <AiOutlineClose className="text-[red]" />);
+
+      setLoading(false);
+    }
   };
 
   return (
@@ -36,7 +54,6 @@ const Login = () => {
           value={form.email}
           onChange={(e) => setForm({ ...form, email: e.target.value })}
         />
-        <span className="error-message"></span>
       </div>
 
       <div className="form-group">
@@ -52,21 +69,24 @@ const Login = () => {
           value={form.password}
           onChange={(e) => setForm({ ...form, password: e.target.value })}
         />
-        <span className="error-message"></span>
       </div>
 
       <button
         type="submit"
-        className="btn py-2 transition hover:scale-105 active:scale-100 mt-4"
+        className="btn py-2 transition hover:scale-105 active:scale-100 mt-4 flex items-center justify-center"
         onClick={handleSubmit}
       >
-        Gửi đi
+        {loading ? (
+          <AiOutlineLoading3Quarters className="animate-spin w-6 h-6" />
+        ) : (
+          "Đăng nhập"
+        )}
       </button>
 
       <div className="mt-60">
         <p className="text-center">
           Quên mật khẩu?{" "}
-          <Link to="/auth/forgot-password" className="font-semibold">
+          <Link to="/auth/forgot-password" className="font-semibold underline">
             Thay đổi mật khẩu
           </Link>
         </p>

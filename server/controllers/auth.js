@@ -12,10 +12,9 @@ export const registerController = async (req, res, next) => {
   if (!validator.isEmail(email)) return sendError(res, "Email không hợp lệ!");
 
   if (!password) return sendError(res, "Vui lòng nhập mật khẩu!");
-  if (!confirmPassword)
-    return sendError(res, "Vui lòng xác nhận mật khẩu!");
   if (password.length < 8)
     return sendError(res, "Mật khẩu phải có ít nhất 8 ký tự!");
+  if (!confirmPassword) return sendError(res, "Vui lòng xác nhận mật khẩu!");
   if (password !== confirmPassword)
     return sendError(res, "Mật khẩu và xác nhận mật khẩu không khớp!");
 

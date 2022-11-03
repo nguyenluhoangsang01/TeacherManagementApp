@@ -28,11 +28,15 @@
   }
 
   .form-group input {
-    @apply border border-gray-300 rounded-sm px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent placeholder:text-gray-400 transition;
+    @apply border border-gray-300 rounded-sm px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent placeholder:text-gray-400 transition outline-none;
   }
 
   .form-group input.error {
     @apply ring-2 ring-red-600;
+  }
+
+  .form-group select {
+    @apply border border-gray-300 rounded-sm px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition outline-none;
   }
 
   .form-group span {

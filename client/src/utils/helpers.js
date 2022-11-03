@@ -1,6 +1,7 @@
 import axios from "axios";
+import toast from "react-hot-toast";
 
-export default async function sendAPIRequest(
+export async function sendAPIRequest(
   url,
   method = "GET",
   data = {},
@@ -25,3 +26,10 @@ export default async function sendAPIRequest(
     return err;
   }
 }
+
+export const sendToast = (message, icon) => {
+  toast(message, {
+    icon,
+    duration: 5000,
+  });
+};
