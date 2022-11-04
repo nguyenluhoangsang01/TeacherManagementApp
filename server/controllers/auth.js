@@ -42,11 +42,8 @@ export const loginController = async (req, res, next) => {
   const { email } = req.body;
 
   if (!email) return sendError(res, "Vui lòng nhập email!");
-  if (!validator.isEmail(email)) return sendError(res, "Email không hợp lệ!");
 
   if (!req.body.password) return sendError(res, "Vui lòng nhập mật khẩu!");
-  if (req.body.password.length < 8)
-    return sendError(res, "Mật khẩu phải có ít nhất 8 ký tự!");
 
   try {
     const isExist = await User.exists({ email });

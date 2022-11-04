@@ -2,28 +2,8 @@ POST http://localhost:8000/api/auth/register
 Content-Type: application/json
 
 {
-	"email": "teacher@teacher.com",
-	"password": "teacher123",
-	"confirmPassword": "teacher123",
-	"role": "teacher"
-}
-
-
-###
-POST http://localhost:8000/api/auth/login
-Content-Type: application/json
-
-{
-	"email": "admin@admin.ad",
-	"password": "11111111"
-}
-
-###
-PUT http://localhost:8000/api/auth/forgot-password
-Content-Type: application/json
-
-{
-	"email": "sang.197ct22513@vanlanguni.vn",
-	"password": "12345678",
-	"confirmPassword": "12345678"
+	"email": "admin",
+	"password": "admin",
+	"confirmPassword": "admin",
+	"role": "admin"
 }
