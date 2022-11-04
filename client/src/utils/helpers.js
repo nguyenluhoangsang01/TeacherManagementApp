@@ -9,10 +9,10 @@ export async function sendAPIRequest(
 ) {
   try {
     const res = await axios.request({
-      url: encodeURI(url),
-      headers,
-      method: method,
+      url,
+      method,
       data,
+      headers,
     });
 
     return res.data;

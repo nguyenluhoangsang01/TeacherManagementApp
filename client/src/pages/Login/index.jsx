@@ -3,7 +3,6 @@ import { AiOutlineClose, AiOutlineLoading3Quarters } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Navigate } from "react-router-dom";
 import { loginReducerAsync, selectAuth } from "../../features/auth/authSlice";
-import { LOCAL_STORAGE_AUTH_KEY } from "../../utils/constants";
 import { sendToast } from "../../utils/helpers";
 
 const initialValue = {
@@ -14,12 +13,11 @@ const initialValue = {
 const Login = () => {
   const dispatch = useDispatch();
   const { user } = useSelector(selectAuth);
-  const auth = localStorage.getItem(LOCAL_STORAGE_AUTH_KEY);
 
   const [form, setForm] = useState(initialValue);
   const [loading, setLoading] = useState(false);
 
-  if (user || auth) {
+  if (user) {
     return <Navigate to="/" replace />;
   }
 

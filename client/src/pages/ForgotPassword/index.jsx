@@ -7,7 +7,7 @@ import {
 import { useSelector } from "react-redux";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { selectAuth } from "../../features/auth/authSlice";
-import { BASE_URL_API, LOCAL_STORAGE_AUTH_KEY } from "../../utils/constants";
+import { BASE_URL_API } from "../../utils/constants";
 import { sendAPIRequest, sendToast } from "../../utils/helpers";
 
 const initialValue = {
@@ -18,13 +18,12 @@ const initialValue = {
 
 const ForgotPassword = () => {
   const { user } = useSelector(selectAuth);
-  const auth = localStorage.getItem(LOCAL_STORAGE_AUTH_KEY);
   const navigate = useNavigate();
 
   const [form, setForm] = useState(initialValue);
   const [loading, setLoading] = useState(false);
 
-  if (user || auth) {
+  if (user) {
     return <Navigate to="/" replace />;
   }
 
@@ -35,7 +34,7 @@ const ForgotPassword = () => {
 
     try {
       const res = await sendAPIRequest(
-        `${BASE_URL_API}/forgot-password`,
+        `${BASE_URL_API}/auth/forgot-password`,
         "PUT",
         form
       );

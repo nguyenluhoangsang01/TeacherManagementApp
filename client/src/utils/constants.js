@@ -1,4 +1,4 @@
-const BASE_URL_API = "http://localhost:8000/api/auth";
+const BASE_URL_API = "http://localhost:8000/api";
 
 const LOCAL_STORAGE_AUTH_KEY = "auth";
 

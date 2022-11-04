@@ -4,7 +4,9 @@ import {
   AiOutlineClose,
   AiOutlineLoading3Quarters,
 } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Link, Navigate } from "react-router-dom";
+import { selectAuth } from "../../features/auth/authSlice";
 import { BASE_URL_API } from "../../utils/constants";
 import { sendAPIRequest, sendToast } from "../../utils/helpers";
 
@@ -16,8 +18,14 @@ const initialValue = {
 };
 
 const Register = () => {
+  const { user } = useSelector(selectAuth);
+
   const [form, setForm] = useState(initialValue);
   const [loading, setLoading] = useState(false);
+
+  if (user?.role !== "admin") {
+    return <Navigate to="/" replace />;
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -26,7 +34,7 @@ const Register = () => {
 
     try {
       const res = await sendAPIRequest(
-        `${BASE_URL_API}/register`,
+        `${BASE_URL_API}/auth/register`,
         "POST",
         form
       );
@@ -41,7 +49,7 @@ const Register = () => {
 
       setLoading(false);
     } catch (error) {
-			sendToast(error.message, <AiOutlineClose className="text-[red]" />);
+      sendToast(error.message, <AiOutlineClose className="text-[red]" />);
 
       setLoading(false);
     }

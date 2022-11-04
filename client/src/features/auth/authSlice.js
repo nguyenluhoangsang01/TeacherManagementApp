@@ -4,7 +4,7 @@ import { BASE_URL_API, LOCAL_STORAGE_AUTH_KEY } from "../../utils/constants";
 import { sendAPIRequest, sendToast } from "../../utils/helpers";
 
 const initialState = {
-  user: null,
+  user: JSON.parse(localStorage.getItem(LOCAL_STORAGE_AUTH_KEY)) || null,
 };
 
 export const authSlice = createSlice({
@@ -46,7 +46,7 @@ export const authSlice = createSlice({
 export const loginReducerAsync = (formState) => async (dispatch) => {
   try {
     const res = await sendAPIRequest(
-      `${BASE_URL_API}/login`,
+      `${BASE_URL_API}/auth/login`,
       "POST",
       formState
     );
